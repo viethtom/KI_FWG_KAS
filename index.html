@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KI als Lernhelfer statt Lösungsmaschine – Workshop-Materialien</title>
+<style>
+  :root {
+    --blue: #1f4e79;
+    --blue-light: #eaf2f8;
+    --ink: #23272b;
+    --sub: #55606a;
+    --border: #dfe6ec;
+    --bg: #f7f9fb;
+    --card: #ffffff;
+    --accent: #2e7d5b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --blue: #6fa8d8;
+      --blue-light: #16283a;
+      --ink: #e8edf1;
+      --sub: #aab4bd;
+      --border: #2a3844;
+      --bg: #12181d;
+      --card: #1a2229;
+      --accent: #5fb98b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
+  header.hero {
+    background: linear-gradient(160deg, var(--blue) 0%, #163a58 100%);
+    color: #fff;
+    padding: 48px 20px 40px;
+  }
+  header.hero .wrap { padding: 0 20px; }
+  .kicker { font-size: 0.95rem; opacity: 0.85; margin: 0 0 8px; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin: 0 0 14px; line-height: 1.25; }
+  .subtitle { font-style: italic; opacity: 0.9; margin: 0 0 22px; max-width: 60ch; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 10px 24px;
+    font-size: 0.92rem; opacity: 0.95;
+  }
+  .meta span b { font-weight: 600; }
+  .cta-row { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; font-size: 0.95rem; border: 1px solid transparent;
+    transition: transform .12s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: #fff; color: var(--blue); }
+  .btn-ghost { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.4); }
+
+  nav.toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: -28px 0 36px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+  nav.toc h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--sub); margin: 0 0 10px; }
+  nav.toc ol { margin: 0; padding-left: 1.2em; columns: 2; column-gap: 24px; }
+  nav.toc li { margin-bottom: 6px; break-inside: avoid; }
+  nav.toc a { color: var(--blue); text-decoration: none; font-size: 0.95rem; }
+  nav.toc a:hover { text-decoration: underline; }
+
+  section.material {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 28px 26px;
+    margin-bottom: 22px;
+    scroll-margin-top: 16px;
+  }
+  section.material h2 {
+    color: var(--blue);
+    font-size: 1.3rem;
+    margin: 0 0 6px;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+  }
+  .material-meta {
+    font-size: 0.88rem;
+    color: var(--sub);
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+  h3 { color: var(--blue); font-size: 1.05rem; margin: 22px 0 8px; }
+  p { margin: 0 0 14px; }
+  ol, ul { padding-left: 1.4em; margin: 0 0 14px; }
+  li { margin-bottom: 8px; }
+  blockquote {
+    margin: 14px 0;
+    padding: 10px 16px;
+    border-left: 3px solid var(--blue);
+    background: var(--blue-light);
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+  }
+  strong.step { display: block; margin: 16px 0 4px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 6px;
+    font-size: 0.92rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 9px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--blue); color: #fff; font-weight: 600; }
+  tr:nth-child(even) td { background: var(--blue-light); }
+  td.check { text-align: center; width: 60px; font-size: 1.1rem; }
+  .fill-line { margin: 0 0 16px; }
+  .fill-line b { display: block; margin-bottom: 4px; }
+  .fill-line .line { display: block; border-bottom: 1px solid var(--border); height: 1.4em; }
+  .download-row {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .dl {
+    display: inline-flex; align-items: center; gap: 7px;
+    color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.92rem;
+    border: 1px solid var(--accent); padding: 8px 14px; border-radius: 8px;
+  }
+  .dl:hover { background: var(--accent); color: #fff; }
+  .note {
+    font-size: 0.88rem; color: var(--sub); font-style: italic; margin-top: 18px;
+  }
+  footer { text-align: center; color: var(--sub); font-size: 0.85rem; padding: 30px 20px 10px; }
+  a.top { display: block; text-align: right; font-size: 0.8rem; color: var(--sub); text-decoration: none; margin-top: 10px; }
+  a.top:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Workshop für den Studientag</p>
+    <h1 id="top">KI als Lernhelfer statt Lösungsmaschine</h1>
+    <p class="subtitle">Aufgaben kognitiv aktivierend gestalten – mit KI-Kompetenzen nach Alles, Falck, Flick &amp; Schulz</p>
+    <div class="meta">
+      <span><b>Dauer:</b> 90 Minuten</span>
+      <span><b>Zielgruppe:</b> Fachlich gemischtes Kollegium (Kleingruppen zu 3–4 Personen)</span>
+      <span><b>Format:</b> Praxisworkshop mit eigenem Endgerät und Zugang zu einem KI-Chatbot</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="pdfs/Alle_Arbeitsmaterialien_M1-M6.pdf" download>⬇ Alle Materialien als PDF</a>
+      <a class="btn btn-ghost" href="#m1">Zu den Arbeitsaufträgen</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="toc" aria-label="Inhaltsverzeichnis">
+    <h2>Materialien auf dieser Seite</h2>
+    <ol>
+      <li><a href="#m1">M1 – Arbeitsauftrag Phase 1</a></li>
+      <li><a href="#m2">M2 – Impuls: Tiefenstrukturen</a></li>
+      <li><a href="#m3">M3 – Praxisbeispiel Mathematik</a></li>
+      <li><a href="#m4">M4 – Arbeitsauftrag Phase 2</a></li>
+      <li><a href="#m5">M5 – Kriterienraster</a></li>
+      <li><a href="#m6">M6 – Vorlage Gruppenpräsentation</a></li>
+      <li><a href="#anhang">Anhang – KI-Kompetenzmodell</a></li>
+    </ol>
+  </nav>
+
+  <section class="material" id="m1">
+    <span class="tag">M1</span>
+    <h2>Arbeitsauftrag Phase 1: KI als Lösungsmaschine testen</h2>
+    <p class="material-meta">Zeit: 20 Minuten · Sozialform: Kleingruppen (3–4 Personen)</p>
+    <ol>
+      <li>Bildet Gruppen von 3–4 Personen – nach Möglichkeit fachlich gemischt.</li>
+      <li>Jede Person überlegt sich in 2 Minuten eine „normale“ Aufgabe, wie sie sie im Unterricht oder in einer Klassenarbeit stellen würde, und notiert sie kurz.</li>
+      <li>Wählt gemeinsam eine der Aufgaben aus und gebt sie unverändert in einen KI-Chatbot ein (gemäß schulischer Freigabe, z. B. ein an der Schule zugelassenes Tool).</li>
+      <li>Beantwortet gemeinsam die folgenden Beobachtungsfragen und haltet eure Antworten stichwortartig fest:
+        <ul>
+          <li>Konnte die KI die Aufgabe lösen? Wie gut bzw. wie richtig war das Ergebnis?</li>
+          <li>Wie viel fachliches Denken hätte eine Schülerin oder ein Schüler benötigt, um selbst auf diese Lösung zu kommen?</li>
+          <li>Was hat die KI-Lösung NICHT sichtbar gemacht, was für das fachliche Verständnis eigentlich wichtig wäre?</li>
+        </ul>
+      </li>
+    </ol>
+    <div class="download-row">
+      <a class="dl" href="pdfs/M1_Arbeitsauftrag_Phase1.pdf" download>⬇ M1 als PDF herunterladen</a>
+    </div>
+  </section>
+
+  <section class="material" id="m2">
+    <span class="tag">M2</span>
+    <h2>Impuls: Kognitive Aktivierung &amp; Tiefenstrukturen</h2>
+    <p>Jede Aufgabe hat eine Oberflächenstruktur – das konkrete Ergebnis oder Verfahren, nach dem gefragt wird – und eine Tiefenstruktur: das dahinterliegende fachliche Prinzip oder Muster, das eigentlich gelernt werden soll.</p>
+    <p>KI-Chatbots sind Oberflächenstrukturen in der Regel gewachsen: Sie liefern Ergebnisse und Standardverfahren mühelos. Aufgaben, die nur auf ein Endergebnis zielen, verlieren dadurch ihren Lernwert – die Schülerin oder der Schüler kann die Aufgabe lösen lassen, ohne die Tiefenstruktur je zu berühren.</p>
+    <p>Kognitive Aktivierung bedeutet: Aufgaben müssen Schülerinnen und Schüler dazu bringen, sich aktiv mit den Tiefenstrukturen auseinanderzusetzen – zu vergleichen, Muster zu erkennen, zu begründen, zu verallgemeinern.</p>
+    <h3>Daraus folgen drei Konsequenzen für die Aufgabengestaltung mit KI:</h3>
+    <ol>
+      <li>Die KI wird nicht als Lösungsersteller eingesetzt, sondern als Lernhelfer bzw. Sparringspartner – sie gibt Hinweise statt Lösungen und ermöglicht Selbstüberprüfung.</li>
+      <li>Die Aufgabe wird so gestellt, dass der Lösungsweg, das Muster oder die Begründung im Zentrum stehen – nicht allein das Ergebnis.</li>
+      <li>Die KI wird gezielt NACH der eigenständigen Bearbeitung eingesetzt, um Muster zu erkennen und zu verallgemeinern – die Tiefenstruktur wird so explizit gemacht.</li>
+    </ol>
+    <div class="download-row">
+      <a class="dl" href="pdfs/M2_Impuls_Kognitive_Aktivierung.pdf" download>⬇ M2 als PDF herunterladen</a>
+    </div>
+  </section>
+
+  <section class="material" id="m3">
+    <span class="tag">M3</span>
+    <h2>Praxisbeispiel Mathematik: Vom Ausklammern zu den Binomischen Formeln</h2>
+    <p><strong>Thema: Distributivgesetz – Ausmultiplizieren von Klammern → Binomische Formeln</strong></p>
+
+    <h3>a) Ausgangslage: die klassische Aufgabe</h3>
+    <blockquote>Aufgabe: Multipliziere aus: (x + 4)²</blockquote>
+    <p>Eine KI liefert hierauf sofort und korrekt x² + 8x + 16. Die Schülerin oder der Schüler hätte dabei nichts weiter gelernt, als die KI zu fragen.</p>
+
+    <h3>b) Umgestaltete Aufgabenfolge – KI als Lernhelfer</h3>
+    <strong class="step">Schritt 1 – eigenständig, ohne KI:</strong>
+    <p>Die Schülerinnen und Schüler multiplizieren mehrere Klammern eigenständig mit dem Distributivgesetz aus (jedes Glied mit jedem), z. B. (x+2)², (x+5)², (x−3)², (2x+1)², (x+3)(x−3), (x+4)(x−4) – mit vollständig notiertem Rechenweg.</p>
+
+    <strong class="step">Schritt 2 – KI als Kontrollinstanz, nur bei Unsicherheit:</strong>
+    <p>Bei Unsicherheit dürfen die Schülerinnen und Schüler die KI bitten, ihren Rechenweg zu überprüfen – ausdrücklich ohne die Lösung vorzurechnen.</p>
+    <blockquote>Beispiel-Prompt: „Ich habe (x+5)² so ausgerechnet: [eigene Rechnung einfügen]. Prüfe bitte nur, ob mein Rechenweg beim Ausmultiplizieren mit dem Distributivgesetz korrekt ist, und gib mir einen Hinweis – keine Lösung – falls ein Fehler drin ist.“</blockquote>
+
+    <strong class="step">Schritt 3 – Muster erkennen mit KI, nach Bearbeitung aller Aufgaben:</strong>
+    <p>Die Schülerinnen und Schüler tragen ihre Ergebnisse zusammen und fragen die KI gezielt nach einem Muster.</p>
+    <blockquote>Beispiel-Prompt: „Ich habe folgende Rechnungen durchgeführt: (x+2)² = x²+4x+4, (x+5)² = x²+10x+25, (x−3)² = x²−6x+9, (x+3)(x−3) = x²−9 ... Erkennst du ein Muster zwischen der Ausgangsform und dem Ergebnis? Erkläre mir das Muster in eigenen Worten, aber nenne mir noch nicht den mathematischen Fachbegriff dafür.“</blockquote>
+
+    <strong class="step">Schritt 4 – Sicherung und Fachbegriff, lehrkraftmoderiert:</strong>
+    <p>Im Plenum bzw. mit der Lehrkraft werden die von der KI bzw. den Schülerinnen und Schülern formulierten Muster fachlich präzisiert und als erste, zweite und dritte binomische Formel benannt.</p>
+
+    <h3>c) Rolle der KI in dieser Sequenz</h3>
+    <p>Kontrollinstanz und Muster-Assistent – nicht Lösungsersteller. Die eigentliche fachmethodische Erarbeitung (Distributivgesetz anwenden, Muster verallgemeinern, Fachbegriff einführen) bleibt bei den Schülerinnen und Schülern bzw. der Lehrkraft.</p>
+
+    <div class="download-row">
+      <a class="dl" href="pdfs/M3_Praxisbeispiel_Mathematik.pdf" download>⬇ M3 als PDF herunterladen</a>
+    </div>
+  </section>
+
+  <section class="material" id="m4">
+    <span class="tag">M4</span>
+    <h2>Arbeitsauftrag Phase 2: Aufgabe umgestalten</h2>
+    <p class="material-meta">Zeit: 25 Minuten · Sozialform: Kleingruppen (dieselben wie in Phase 1)</p>
+    <p>Nehmt eure Aufgabe aus Phase 1 wieder auf und beantwortet in der Gruppe die folgenden Leitfragen:</p>
+    <ol>
+      <li>Was ist die Tiefenstruktur dieser Aufgabe – welches fachliche Prinzip, Verfahren oder Muster soll eigentlich gelernt werden?</li>
+      <li>An welcher Stelle würde die KI das eigenständige Denken der Schülerinnen und Schüler abkürzen, wenn sie die Aufgabe direkt löst?</li>
+      <li>Wie könnt ihr die Aufgabe in mehrere Schritte zerlegen, sodass a) die Schülerinnen und Schüler zunächst eigenständig arbeiten (ohne KI), b) die KI erst als Kontroll- bzw. Rückfrageinstanz genutzt wird (Hinweise statt Lösungen), c) die KI am Ende helfen kann, Muster bzw. Tiefenstrukturen zu verallgemeinern?</li>
+      <li>Formuliert 1–2 konkrete Beispiel-Prompts, die ihr euren Schülerinnen und Schülern an die Hand geben würdet.</li>
+      <li>Woran würdet ihr erkennen (Kriterium), dass eure Schülerinnen und Schüler die Tiefenstruktur wirklich verstanden haben – und nicht nur ein KI-Ergebnis übernommen haben?</li>
+    </ol>
+    <div class="download-row">
+      <a class="dl" href="pdfs/M4_Arbeitsauftrag_Phase2.pdf" download>⬇ M4 als PDF herunterladen</a>
+    </div>
+  </section>
+
+  <section class="material" id="m5">
+    <span class="tag">M5</span>
+    <h2>Kriterienraster: Ist meine Aufgabe kognitiv aktivierend mit KI gestaltet?</h2>
+    <p>Zur Selbstüberprüfung der umgestalteten Aufgabe aus Phase 2.</p>
+    <table>
+      <thead>
+        <tr><th>Kriterium</th><th class="check">ja</th><th class="check">teilweise</th><th class="check">nein</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Die Aufgabe verlangt eine eigenständige Bearbeitung, bevor die KI genutzt wird.</td><td class="check">☐</td><td class="check">☐</td><td class="check">☐</td></tr>
+        <tr><td>Die Rolle der KI ist für die Schülerinnen und Schüler klar definiert (z. B. Kontrollinstanz, Rückfragepartner, Muster-Assistent).</td><td class="check">☐</td><td class="check">☐</td><td class="check">☐</td></tr>
+        <tr><td>Die KI liefert keine fertige Lösung, sondern Hinweise, Rückfragen oder eine Überprüfung des eigenen Wegs.</td><td class="check">☐</td><td class="check">☐</td><td class="check">☐</td></tr>
+        <tr><td>Die Aufgabe zielt auf ein fachliches Muster bzw. Prinzip (Tiefenstruktur), nicht nur auf ein Endergebnis.</td><td class="check">☐</td><td class="check">☐</td><td class="check">☐</td></tr>
+        <tr><td>Es gibt einen Schritt, in dem die Schülerinnen und Schüler das erkannte Muster in eigenen Worten bzw. mit Fachbegriffen sichern müssen.</td><td class="check">☐</td><td class="check">☐</td><td class="check">☐</td></tr>
+        <tr><td>Es ist erkennbar, woran die Lehrkraft prüfen kann, ob die Tiefenstruktur wirklich verstanden wurde (Erklärung, Übertragung auf ein neues Beispiel).</td><td class="check">☐</td><td class="check">☐</td><td class="check">☐</td></tr>
+      </tbody>
+    </table>
+    <div class="download-row">
+      <a class="dl" href="pdfs/M5_Kriterienraster.pdf" download>⬇ M5 als PDF herunterladen</a>
+    </div>
+  </section>
+
+  <section class="material" id="m6">
+    <span class="tag">M6</span>
+    <h2>Vorlage für die Gruppenpräsentation</h2>
+    <p class="material-meta">Zeit pro Gruppe: 2–3 Minuten</p>
+    <div class="fill-line"><b>Unser Fach / Thema</b><span class="line"></span></div>
+    <div class="fill-line"><b>Ursprüngliche Aufgabe</b><span class="line"></span></div>
+    <div class="fill-line"><b>Tiefenstruktur, die die Schülerinnen und Schüler erkennen sollen</b><span class="line"></span></div>
+    <div class="fill-line"><b>So haben wir die Aufgabe umgestaltet (3 Schritte)</b><span class="line"></span></div>
+    <div class="fill-line"><b>Beispiel-Prompt für die Schülerinnen und Schüler</b><span class="line"></span></div>
+    <div class="fill-line"><b>Woran erkennen wir, dass die Tiefenstruktur verstanden wurde?</b><span class="line"></span></div>
+    <div class="download-row">
+      <a class="dl" href="pdfs/M6_Vorlage_Praesentation.pdf" download>⬇ M6 als PDF herunterladen</a>
+    </div>
+  </section>
+
+  <section class="material" id="anhang">
+    <span class="tag">Anhang</span>
+    <h2>Das KI-Kompetenzmodell nach Alles, Falck, Flick &amp; Schulz</h2>
+    <p>Das Modell unterscheidet vier Domänen von KI-Kompetenz. Der Workshop durchläuft alle vier – nicht als getrennte Bausteine, sondern eingebettet in die Erfahrung mit der eigenen Aufgabe:</p>
+    <table>
+      <tbody>
+        <tr><td style="width:22%"><strong>Verstehen</strong></td><td>Die TN verstehen in Phase 1 unmittelbar und aus eigener Erfahrung, was ein KI-Chatbot leisten kann – und wo die Grenzen für fachliches Lernen liegen.</td></tr>
+        <tr><td><strong>Anwenden</strong></td><td>Die TN wenden KI praktisch an: erst als Lösungswerkzeug (Phase 1), dann gezielt als Kontroll- und Lernhilfe (Phase 2 und Beispiel M3).</td></tr>
+        <tr><td><strong>Reflektieren</strong></td><td>Zwischenreflexion und die Leitfragen in Phase 2 fordern eine begründete Reflexion über Lernwirkung, Aufgabenqualität und die Rolle der KI ein.</td></tr>
+        <tr><td><strong>Mitgestalten</strong></td><td>Die TN gestalten aktiv eigene Aufgaben um, formulieren Prompts und werden so selbst zu Gestaltenden des KI-Einsatzes in ihrem Fach.</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Hinweis: Dieser Workshop lässt sich unmittelbar an ein schulisches Medien- bzw. Beratungskonzept zum KI-Einsatz anschließen, insbesondere an eine fachschaftsbezogene Weiterarbeit an konkreten Aufgabenformaten.</p>
+    <div class="download-row">
+      <a class="dl" href="pdfs/Anhang_KI_Kompetenzmodell.pdf" download>⬇ Anhang als PDF herunterladen</a>
+    </div>
+  </section>
+
+  <a class="top" href="#top">↑ Nach oben</a>
+
+  <footer>
+    Workshop „KI als Lernhelfer statt Lösungsmaschine“ · Materialien nach Alles, Falck, Flick &amp; Schulz
+  </footer>
+
+</div>
+</body>
+</html>

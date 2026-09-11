@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="gate-locked">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -153,9 +153,47 @@
   footer { text-align: center; color: var(--sub); font-size: 0.85rem; padding: 30px 20px 10px; }
   a.top { display: block; text-align: right; font-size: 0.8rem; color: var(--sub); text-decoration: none; margin-top: 10px; }
   a.top:hover { text-decoration: underline; }
+
+  /* ---- Password gate ---- */
+  html.gate-locked body { overflow: hidden; }
+  .gate-overlay {
+    position: fixed; inset: 0; z-index: 99999;
+    background: linear-gradient(160deg, var(--blue) 0%, #163a58 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .gate-card {
+    background: var(--card); border-radius: 14px; padding: 36px 32px;
+    max-width: 360px; width: 100%; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+  .gate-kicker { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--sub); margin: 0 0 8px; }
+  .gate-title { font-size: 1.3rem; color: var(--blue); margin: 0 0 10px; }
+  .gate-sub { font-size: 0.9rem; color: var(--sub); margin: 0 0 20px; }
+  .gate-card input[type="password"] {
+    width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 1rem; margin-bottom: 14px; box-sizing: border-box; background: var(--bg); color: var(--ink);
+  }
+  .gate-card button {
+    width: 100%; padding: 11px 14px; border: none; border-radius: 8px;
+    background: var(--blue); color: #fff; font-weight: 600; font-size: 0.95rem; cursor: pointer;
+  }
+  .gate-card button:hover { opacity: 0.92; }
+  .gate-error { color: #e05a4e; font-size: 0.85rem; margin: 12px 0 0; }
 </style>
 </head>
 <body>
+
+<div id="gate-overlay" class="gate-overlay">
+  <form id="gate-form" class="gate-card">
+    <p class="gate-kicker">Geschützter Bereich</p>
+    <h1 class="gate-title">Passwort erforderlich</h1>
+    <p class="gate-sub">Diese Materialien sind nur für Teilnehmende der Fortbildung zugänglich.</p>
+    <input id="gate-password" type="password" placeholder="Passwort" autocomplete="off" required>
+    <button type="submit">Entsperren</button>
+    <p id="gate-error" class="gate-error" hidden></p>
+  </form>
+</div>
 
 <header class="hero">
   <div class="wrap">
@@ -336,9 +374,12 @@
   <a class="top" href="#top">↑ Nach oben</a>
 
   <footer>
-    Workshop „KI als Lernhelfer statt Lösungsmaschine“ · Materialien nach Alles, Falck, Flick &amp; Schulz
+    Workshop „KI als Lernhelfer statt Lösungsmaschine“ · Materialien nach Alles, Falck, Flick &amp; Schulz<br>
+    <a href="impressum.html" style="color:var(--sub);">Impressum &amp; Datenschutz</a>
   </footer>
 
 </div>
+
+<script src="assets/gate.js" defer></script>
 </body>
 </html>

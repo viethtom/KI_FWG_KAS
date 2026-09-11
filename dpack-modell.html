@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Das D-PACK-Modell – Arbeitshilfe</title>
+<style>
+  :root {
+    --blue: #1f4e79;
+    --blue-light: #eaf2f8;
+    --ink: #23272b;
+    --sub: #55606a;
+    --border: #dfe6ec;
+    --bg: #f7f9fb;
+    --card: #ffffff;
+    --accent: #2e7d5b;
+    --accent-light: #eaf5ef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --blue: #6fa8d8;
+      --blue-light: #16283a;
+      --ink: #e8edf1;
+      --sub: #aab4bd;
+      --border: #2a3844;
+      --bg: #12181d;
+      --card: #1a2229;
+      --accent: #5fb98b;
+      --accent-light: #172420;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
+  header.hero {
+    background: linear-gradient(160deg, var(--blue) 0%, #163a58 100%);
+    color: #fff;
+    padding: 48px 20px 40px;
+  }
+  header.hero .wrap { padding: 0 20px; }
+  .kicker { font-size: 0.95rem; opacity: 0.85; margin: 0 0 8px; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin: 0 0 14px; line-height: 1.25; }
+  .subtitle { font-style: italic; opacity: 0.9; margin: 0 0 22px; max-width: 60ch; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 10px 24px;
+    font-size: 0.92rem; opacity: 0.95;
+  }
+  .meta span b { font-weight: 600; }
+  .cta-row { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; font-size: 0.95rem; border: 1px solid transparent;
+    transition: transform .12s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: #fff; color: var(--blue); }
+  .btn-ghost { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.4); }
+
+  nav.toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: -28px 0 36px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+  nav.toc h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--sub); margin: 0 0 10px; }
+  nav.toc ol { margin: 0; padding-left: 1.2em; columns: 2; column-gap: 24px; }
+  nav.toc li { margin-bottom: 6px; break-inside: avoid; }
+  nav.toc a { color: var(--blue); text-decoration: none; font-size: 0.95rem; }
+  nav.toc a:hover { text-decoration: underline; }
+
+  section.material {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 28px 26px;
+    margin-bottom: 22px;
+    scroll-margin-top: 16px;
+  }
+  section.material h2 {
+    color: var(--blue);
+    font-size: 1.3rem;
+    margin: 0 0 6px;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+  }
+  .material-meta {
+    font-size: 0.88rem;
+    color: var(--sub);
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+  h3 { color: var(--blue); font-size: 1.05rem; margin: 22px 0 8px; }
+  p { margin: 0 0 14px; }
+  ol, ul { padding-left: 1.4em; margin: 0 0 14px; }
+  li { margin-bottom: 8px; }
+  blockquote {
+    margin: 14px 0;
+    padding: 10px 16px;
+    border-left: 3px solid var(--blue);
+    background: var(--blue-light);
+    font-style: italic;
+    border-radius: 0 6px 6px 0;
+  }
+  strong.step { display: block; margin: 16px 0 4px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 6px;
+    font-size: 0.92rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 9px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--blue); color: #fff; font-weight: 600; }
+  tr:nth-child(even) td { background: var(--blue-light); }
+  .download-row {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .dl {
+    display: inline-flex; align-items: center; gap: 7px;
+    color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.92rem;
+    border: 1px solid var(--accent); padding: 8px 14px; border-radius: 8px;
+  }
+  .dl:hover { background: var(--accent); color: #fff; }
+  .note {
+    font-size: 0.88rem; color: var(--sub); font-style: italic; margin-top: 18px;
+  }
+  footer { text-align: center; color: var(--sub); font-size: 0.85rem; padding: 30px 20px 10px; }
+  a.top { display: block; text-align: right; font-size: 0.8rem; color: var(--sub); text-decoration: none; margin-top: 10px; }
+  a.top:hover { text-decoration: underline; }
+
+  /* ---- D-PACK-specific additions ---- */
+  figure.diagram {
+    margin: 18px 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  figure.diagram img { display: block; width: 100%; height: auto; }
+  figure.diagram figcaption {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    color: var(--sub);
+    background: var(--blue-light);
+    border-top: 1px solid var(--border);
+    font-style: italic;
+  }
+  .fb-row { display: grid; grid-template-columns: 150px 1fr; gap: 12px; margin-bottom: 10px; }
+  .fb-row b { color: var(--sub); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; font-weight: 700; }
+  .fb-row p { margin: 0; }
+  .ki-box {
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+  }
+  .ki-box b { display: block; color: var(--accent); font-size: 0.85rem; margin-bottom: 6px; }
+  .ki-box p { margin: 0; }
+  .subject-block { border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin: 0 0 18px; }
+  .subject-block h3 { margin-top: 0; }
+  .pattern-note {
+    margin-top: 8px;
+    padding: 14px 16px;
+    background: var(--blue-light);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+  }
+  .back-row { margin: 0 0 22px; }
+  .back-row a { color: var(--blue); text-decoration: none; font-weight: 600; font-size: 0.92rem; }
+  .back-row a:hover { text-decoration: underline; }
+  @media (max-width: 560px) {
+    .fb-row { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Arbeitshilfe · vertiefendes Nachschlagematerial</p>
+    <h1 id="top">Das D-PACK-Modell</h1>
+    <p class="subtitle">Methodisch-technische Unterrichtsplanung – mit umgekehrter Planungslogik, Fachbeispielen und KI-Bezug</p>
+    <div class="meta">
+      <span><b>Herkunft:</b> Workshop „Projektorientiertes Lernen mit eduScrum“</span>
+      <span><b>Einsatz:</b> Kurzinput ca. 15 Minuten + Nachschlagematerial</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="pdfs/DPACK_Modell.pdf" download>⬇ Als PDF herunterladen</a>
+      <a class="btn btn-ghost" href="index.html">← Zurück zur Workshop-Startseite</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="toc" aria-label="Inhaltsverzeichnis">
+    <h2>Auf dieser Seite</h2>
+    <ol>
+      <li><a href="#impuls">Impulstext &amp; Modell</a></li>
+      <li><a href="#planungsrichtung">Umgekehrte Planungsrichtung</a></li>
+      <li><a href="#vergleich">Beispiel: zwei Planungsrichtungen</a></li>
+      <li><a href="#faecher">Fachbeispiele</a></li>
+      <li><a href="#ki-reflexion">Warum KI die Verschiebung verdeutlicht</a></li>
+    </ol>
+  </nav>
+
+  <section class="material" id="impuls">
+    <span class="tag">Impuls</span>
+    <h2>Impulstext – für den mündlichen Kurzvortrag</h2>
+    <p>Das D-PACK-Modell erweitert das bekannte TPACK-Modell (Mishra &amp; Koehler): Statt technisches Wissen (T) isoliert zu betrachten, integriert D-PACK eine umfassendere Digitalitätskompetenz (D), die neben dem „Wie funktioniert das?“ auch danach fragt, wie eine Technik oder Methode im Lernprozess wirkt und wie sie sinnvoll eingesetzt wird (Dagstuhl-Dreieck).</p>
+    <p>Für diesen Workshop wird der Begriff „Technik“ bewusst weiter gefasst: nicht nur als digitales Werkzeug, sondern als methodisch-technisches Handeln insgesamt – analog wie digital. Ein Standup ist in diesem Sinn ebenso „Technik“ wie ein digitales Whiteboard: beide sind Verfahren, mit denen fachliche Tiefenstrukturen für Schülerinnen und Schüler erfahrbar gemacht werden.</p>
+    <p>KI-Werkzeuge sind eine weitere, besonders wirkmächtige Ausprägung von „Technik“ in diesem Sinn: Sie verändern das methodische Vorgehen oft noch deutlicher als klassische digitale Werkzeuge, weil sie fertige Inhalte liefern können, ohne die fachliche Tiefenstruktur automatisch mitzuliefern. Die Fachbeispiele weiter unten zeigen das konkret.</p>
+
+    <figure class="diagram">
+      <img src="images/dpack-modell.png" alt="Das D-PACK-Modell: drei überlappende Kreise für Inhaltliche Kompetenz (C), Pädagogische Kompetenz (P) und Digitalitätskompetenz (D). In der Schnittmenge: fachliche Tiefenstrukturen methodisch-technisch erschließen.">
+      <figcaption>Abb. 1 · Das D-PACK-Modell – Content-, Pedagogy- und Digitalitätskompetenz mit ihren Schnittmengen. Für diesen Workshop wird „D“ methodisch-technisch gelesen.</figcaption>
+    </figure>
+
+    <p>Die drei Bereiche im Überblick: <strong>Inhaltliche Kompetenz (C)</strong> – was fachlich gelernt werden soll; <strong>Pädagogische Kompetenz (P)</strong> – wie Lernprozesse gestaltet werden; <strong>Digitalitätskompetenz (D)</strong> – hier gelesen als methodisch-technische Kompetenz: mit welchem Verfahren (Standup, Rollenwechsel, Produktform, digitales Tool …) wird gearbeitet. Entscheidend ist die Schnittmenge aller drei Bereiche in der Mitte: Dort wird eine Methode/Technik so gewählt, dass sie die fachlichen Tiefenstrukturen eines Themas tatsächlich erschließt – nicht nur organisatorisch praktisch ist.</p>
+  </section>
+
+  <section class="material" id="planungsrichtung">
+    <span class="tag">Kernidee</span>
+    <h2>Die Planungsrichtung wird umgedreht</h2>
+    <p>Normalerweise steht der fachliche Inhalt fest, und die passende Methode wird im Anschluss gesucht. In diesem Workshop soll die Planungsrichtung bewusst umgekehrt werden: Ausgangspunkt ist die Frage, welche fachliche Tiefenstruktur Schülerinnen und Schüler durch das Projekt erkennen und einüben sollen. Erst danach wird entschieden, mit welcher Methode/Technik – analog oder digital – diese Struktur am besten erfahrbar wird. Die fachlichen Inhalte und Materialien werden anschließend an diese methodisch-technische Entscheidung angepasst.</p>
+
+    <figure class="diagram">
+      <img src="images/dpack-planung.png" alt="Vergleich der Planungsrichtung: Üblich führt der feststehende fachliche Inhalt zur passenden Methode; im D-PACK-Ansatz führt die fachliche Tiefenstruktur zur methodisch-technischen Wahl, an die Inhalte danach angepasst werden.">
+      <figcaption>Abb. 2 · Übliche vs. umgekehrte Planungsrichtung – in diesem Workshop wird von der Methode/Technik her gedacht.</figcaption>
+    </figure>
+
+    <p>Für Schülerinnen und Schüler wird dadurch transparent, dass Methoden – ob analog oder digital – nicht beliebig austauschbar sind, sondern gezielt eingesetzt werden, um die Lern- und Tiefenstrukturen eines Faches sichtbar und bearbeitbar zu machen. Fachliches Vorgehen und Methode stehen damit immer in Abhängigkeit von der jeweils eingesetzten Technik.</p>
+
+    <h3>Warum diese Blickrichtung so schwerfällt</h3>
+    <p>Der Wechsel von „Welchen Stoff behandeln wir?“ zu „Welche fachliche Tiefenstruktur soll erkennbar werden?“ ist keine Kleinigkeit, sondern verlangt, eine tief eingeübte Gewohnheit zu durchbrechen. Kernlehrpläne sind inhaltlich formuliert („Die Schülerinnen und Schüler kennen …“), Studium und Referendariat trainieren vor allem fachlich-inhaltliche Stoffvermittlung, und auch Prüfungsformate fragen meist Inhalte ab. Von dort aus zu planen ist der eingeübte Normalfall – nicht, weil er falsch wäre, sondern weil er selten hinterfragt wird.</p>
+    <p>Der D-PACK-Blick verlangt deshalb einen bewussten Zwischenschritt: Bevor über Stoff gesprochen wird, wird zunächst benannt, welches fachliche Vorgehen – welche Denk- oder Arbeitsweise des Faches – die Schülerinnen und Schüler an diesem Gegenstand einüben sollen. Das ist ungewohnt und fühlt sich im ersten Moment oft abstrakter an als eine Inhaltsliste. Es lohnt sich trotzdem, weil eine einmal erkannte Tiefenstruktur auf viele verschiedene Inhalte übertragbar ist – die Methode/Technik, die sie erschließt, bleibt bei einem neuen Thema oft dieselbe.</p>
+  </section>
+
+  <section class="material" id="vergleich">
+    <span class="tag">Beispiel</span>
+    <h2>Ein Thema, zwei Planungsrichtungen</h2>
+    <p>Das folgende Beispiel aus der Erdkunde zeigt denselben Unterrichtsgegenstand einmal inhaltlich zuerst und einmal von der Tiefenstruktur her geplant.</p>
+    <table>
+      <thead>
+        <tr><th></th><th>Inhaltlich zuerst geplant (üblich)</th><th>Tiefenstruktur zuerst geplant (D-PACK)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Ausgangsfrage</strong></td><td>Welchen Stoff behandeln wir?</td><td>Welche fachliche Tiefenstruktur soll erkennbar werden?</td></tr>
+        <tr><td><strong>Erste Entscheidung</strong></td><td>Thema „Regenwald“: Klima, Vegetation, Nutzung, Rodung</td><td>Vergleichendes, kategoriengeleitetes Raumdenken</td></tr>
+        <tr><td><strong>Methode/Technik</strong></td><td>ergibt sich eher zufällig: Lehrervortrag + Gruppenreferat</td><td>bewusst gewählt: Vergleichsmatrix zu zwei Räumen anhand derselben Kategorien</td></tr>
+        <tr><td><strong>Rolle des Inhalts</strong></td><td>steht von Anfang an fest, Methode wird passend gesucht</td><td>wird zuletzt an die Methode angepasst – austauschbar, z. B. anderes Raumpaar</td></tr>
+        <tr><td><strong>Transfereffekt</strong></td><td>Schüler:innen kennen Fakten zum Regenwald</td><td>Schüler:innen können die Vergleichsmethode auf jeden neuen Raum anwenden</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:14px;">Der Unterschied liegt nicht im Fleiß oder in der Qualität der Vorbereitung, sondern im Ausgangspunkt: In der rechten Spalte ist die Methode (die Vergleichsmatrix mit festen Kategorien) das eigentliche Lernziel – der Inhalt (Regenwald, Wüste oder ein anderes Raumpaar) ist austauschbares Material, an dem diese Methode geübt wird.</p>
+  </section>
+
+  <section class="material" id="faecher">
+    <span class="tag">Fachbeispiele</span>
+    <h2>Beispiele aus verschiedenen Fächern</h2>
+    <p>Wie eine bewusst gewählte Methode/Technik das Erlernen einer fachlichen Tiefenstruktur oder Fachmethode unterstützt – nicht nur organisatorisch entlastet. Und wie sich das Bild mit KI-Einsatz noch einmal verschiebt.</p>
+
+    <div class="subject-block">
+      <h3>Geschichte</h3>
+      <div class="fb-row"><b>Tiefenstruktur</b><p>Quellenkritik und Multiperspektivität – Quelle und Darstellung unterscheiden, Interessen hinter Aussagen erkennen.</p></div>
+      <div class="fb-row"><b>Projektbeispiel</b><p>Projekt zu einem historischen Ereignis, z. B. dem Mauerfall oder der Industrialisierung.</p></div>
+      <div class="fb-row"><b>Methode/Technik</b><p>Perspektiven-Stationenlernen: Gruppen ordnen unterschiedliche Quellentypen (Zeitzeugenbericht, Zeitungsartikel, offizielles Dokument) einer gemeinsamen Perspektiven-Wand zu (analog: Pinnwand; digital: Padlet/Miro-Board) und markieren, wessen Interessen jeweils sichtbar werden.</p></div>
+      <div class="fb-row"><b>Warum das funktioniert</b><p>Das Zuordnen selbst zwingt dazu, Quellenart und Perspektive zu unterscheiden – nicht das Lesen von Inhalt allein. Ein Lückentext zu Ereignisdaten würde dieselbe Tiefenstruktur nicht trainieren.</p></div>
+      <div class="ki-box">
+        <b>Mit KI-Einsatz – die Methode verschiebt sich weiter</b>
+        <p>Die Gruppen lassen zusätzlich von einer KI eine Zeitzeugen-Darstellung zum Ereignis erzeugen und ordnen auch diese versuchsweise der Perspektiven-Wand zu – mit der Zusatzaufgabe, an welchen sprachlichen und inhaltlichen Merkmalen sie als KI-generiert und historisch nicht verankert zu erkennen ist. Weil ein KI-Text auf den ersten Blick genauso glaubwürdig wirkt wie eine echte Quelle, aber keinerlei Quellenwert besitzt, wird Quellenkritik hier nicht nur geübt, sondern unmittelbar notwendig.</p>
+      </div>
+    </div>
+
+    <div class="subject-block">
+      <h3>Mathematik</h3>
+      <div class="fb-row"><b>Tiefenstruktur</b><p>Vermuten – Prüfen – Verallgemeinern (mathematisches Argumentieren), Muster in Zahlen oder Figuren erkennen.</p></div>
+      <div class="fb-row"><b>Projektbeispiel</b><p>Untersuchung eines Zahlenmusters oder geometrischen Zusammenhangs.</p></div>
+      <div class="fb-row"><b>Methode/Technik</b><p>Systematische Parametervariation in einer Tabellenkalkulation oder GeoGebra: eine Größe gezielt verändern, die Auswirkung beobachten, eine Vermutung formulieren und an weiteren Fällen prüfen, bevor sie schriftlich begründet wird.</p></div>
+      <div class="fb-row"><b>Warum das funktioniert</b><p>Das Werkzeug macht das systematische Variieren und Prüfen einer Vermutung selbst zum Handlungsschritt – genau das mathematische Vorgehen, das gelernt werden soll, nicht nur das Berechnen eines Ergebnisses.</p></div>
+      <div class="ki-box">
+        <b>Mit KI-Einsatz – die Methode verschiebt sich weiter</b>
+        <p>Die Gruppen lassen sich von einer KI eine Erklärung für das gefundene Muster vorschlagen – und prüfen diese anschließend selbst an weiteren Beispielen nach, statt sie zu übernehmen. Weil KI-Erklärungen mathematisch plausibel klingen können, ohne korrekt zu sein, wird das Prüfen der Vermutung (nicht das Finden) zum eigentlichen Lernschritt – das mathematische Vorgehen wird so noch bewusster von der bloßen Ergebnisbeschaffung getrennt.</p>
+      </div>
+    </div>
+
+    <div class="subject-block">
+      <h3>Biologie / Naturwissenschaften</h3>
+      <div class="fb-row"><b>Tiefenstruktur</b><p>Naturwissenschaftliche Erkenntnismethode – Hypothese, kontrollierter Versuch, Auswertung, Rückbezug auf die Hypothese.</p></div>
+      <div class="fb-row"><b>Projektbeispiel</b><p>Untersuchung von Wachstums- oder Keimungsbedingungen.</p></div>
+      <div class="fb-row"><b>Methode/Technik</b><p>Kontrollgruppen-Experiment mit Protokollvorlage, die gezielt nach unabhängiger/abhängiger Variable und Kontrollbedingung fragt (analog), alternativ Langzeitmessung mit einem digitalen Sensor-Datenlogger.</p></div>
+      <div class="fb-row"><b>Warum das funktioniert</b><p>Die Protokollstruktur selbst erzwingt das Denken in Variablen und Kontrolle – den Kern der naturwissenschaftlichen Methode – unabhängig davon, welches konkrete biologische Thema untersucht wird.</p></div>
+      <div class="ki-box">
+        <b>Mit KI-Einsatz – die Methode verschiebt sich weiter</b>
+        <p>Eine KI wird gebeten, aus den erhobenen Messdaten eine mögliche Erklärung abzuleiten; die Gruppe muss diese Erklärung anschließend mit einem eigenen kontrollierten Gegenversuch oder anhand der eigenen Kontrollgruppendaten überprüfen, statt sie als Ergebnis zu übernehmen. Die KI ersetzt so nicht das Experiment, sondern liefert nur eine zu prüfende Vermutung – der Unterschied zwischen Korrelation und Kausalität wird dadurch unmittelbar erfahrbar.</p>
+      </div>
+    </div>
+
+    <div class="subject-block">
+      <h3>Deutsch / Literatur</h3>
+      <div class="fb-row"><b>Tiefenstruktur</b><p>Textinterpretation als textbelegte, begründete Deutung – Meinung von belegter Aussage unterscheiden, Mehrdeutigkeit aushalten.</p></div>
+      <div class="fb-row"><b>Projektbeispiel</b><p>Interpretation eines Gedichts oder einer Kurzgeschichte.</p></div>
+      <div class="fb-row"><b>Methode/Technik</b><p>Placemat-Methode: Jede:r notiert zunächst einzeln eine Deutung mit Textstelle, erst danach Vergleich und Diskussion in der Gruppe und Einigung auf die tragfähigsten, textbelegten Deutungen.</p></div>
+      <div class="fb-row"><b>Warum das funktioniert</b><p>Die Struktur der Methode – erst einzeln, dann Textbeleg-Pflicht, dann Aushandlung – trainiert genau die Unterscheidung zwischen unbegründeter Meinung und textbelegter Interpretation.</p></div>
+      <div class="ki-box">
+        <b>Mit KI-Einsatz – die Methode verschiebt sich weiter</b>
+        <p>Eine KI erzeugt eine zweite Interpretation desselben Textes; die Gruppe vergleicht diese mit der eigenen und prüft für beide Deutungen, ob sie tatsächlich mit Textstellen belegt sind oder nur plausibel klingen. KI-Interpretationen sind oft eloquent formuliert, aber nicht immer textnah – der Vergleich schärft genau die Unterscheidung zwischen Meinung und belegter Deutung, um die es in der Methode geht.</p>
+      </div>
+    </div>
+
+    <div class="subject-block">
+      <h3>Politik / Sozialwissenschaften</h3>
+      <div class="fb-row"><b>Tiefenstruktur</b><p>Kontroversität und Interessenanalyse (Beutelsbacher Konsens) – erkennen, wessen Interessen hinter einer Position stehen.</p></div>
+      <div class="fb-row"><b>Projektbeispiel</b><p>Planspiel zu einer aktuellen politischen Entscheidung, z. B. einem Tempolimit oder späteren Schulstartzeiten.</p></div>
+      <div class="fb-row"><b>Methode/Technik</b><p>Rollenbasiertes Planspiel bzw. Fishbowl-Debatte mit zugewiesenen Interessenpositionen, die die Schüler:innen nicht selbst wählen dürfen.</p></div>
+      <div class="fb-row"><b>Warum das funktioniert</b><p>Die erzwungene Rollenübernahme macht die Interessengebundenheit einer Position praktisch erfahrbar, statt sie nur inhaltlich zu behaupten.</p></div>
+      <div class="ki-box">
+        <b>Mit KI-Einsatz – die Methode verschiebt sich weiter</b>
+        <p>Die Gruppen fragen eine KI zusätzlich nach einer „neutralen“ Einschätzung zur Streitfrage und analysieren anschließend, welche Interessen oder Perspektiven trotzdem in dieser vermeintlich neutralen Antwort stecken. Das macht sichtbar, dass auch KI-Antworten nie interessenfrei sind – die Methode (Interessenanalyse) wird dabei direkt auf ein neues Objekt angewendet: die KI-Antwort selbst.</p>
+      </div>
+    </div>
+
+    <div class="pattern-note"><strong>Gemeinsames Muster:</strong> In jedem Beispiel ist die Methode/Technik so gewählt, dass ihre Durchführung selbst die fachliche Denk- oder Arbeitsweise erzwingt – nicht als zusätzliche Übung danach, sondern als Struktur der Aufgabe. Prüffrage für jedes Fach: Trainiert die gewählte Methode die Tiefenstruktur, oder liefert sie nur eine organisatorische Hülle für Inhalte, die genauso gut anders vermittelt werden könnten?</div>
+  </section>
+
+  <section class="material" id="ki-reflexion">
+    <span class="tag">Einordnung</span>
+    <h2>Warum KI die methodische Verschiebung noch deutlicher macht</h2>
+    <p>Ein KI-Tool kann in Sekunden einen Inhalt liefern – eine Antwort, eine Interpretation, eine Erklärung, eine vermeintliche Quelle –, aber es kann die fachliche Tiefenstruktur nicht ersetzen, mit der dieser Inhalt geprüft, eingeordnet oder infrage gestellt wird. Wird ein KI-Ergebnis unreflektiert übernommen, entfällt genau der Lernschritt, um den es im Projekt eigentlich geht. Deshalb braucht jeder KI-Einsatz im Unterricht eine explizite Prüf- oder Reflexionsaufgabe, die die Tiefenstruktur des Fachs aktiviert – nicht als zusätzliche Bremse, sondern als eigentlicher Kern der Aufgabe.</p>
+    <p>In allen fünf KI-Varianten oben liegt der Schwerpunkt deshalb auf der <strong>Reflektieren</strong>-Dimension der KI-Kompetenz – neben Verstehen, Anwenden und Mitgestalten, denselben vier Domänen wie im <a href="index.html" style="color:var(--blue);">Workshop „KI als Lernhelfer statt Lösungsmaschine“</a>: KI-Ausgaben werden nicht als fertiges Ergebnis akzeptiert, sondern als zu prüfende Aussage behandelt, die erst durch die fachliche Methode – Quellenkritik, mathematisches Prüfen, kontrollierten Versuch, Textbeleg, Interessenanalyse – eingeordnet werden darf.</p>
+    <p>Für die Standup-Struktur bedeutet das: Ein KI-generierter Zwischenstand ist im Standup kein Ergebnis, sondern ein Hindernis oder ein nächster Arbeitsschritt, über den berichtet wird – <em>„Wir haben eine KI-Antwort bekommen und prüfen sie jetzt“</em> ist eine typische, gute Standup-Aussage.</p>
+    <p class="note">Quelle: Auszug aus dem Workshop-Konzept „Projektorientiertes Lernen mit eduScrum“ (Baustein 2 / Abschnitt 4). Das D-PACK-Modell erweitert TPACK (Mishra &amp; Koehler) um eine methodisch-technisch gelesene Digitalitätskompetenz, orientiert am Dagstuhl-Dreieck.</p>
+    <div class="download-row">
+      <a class="dl" href="pdfs/DPACK_Modell.pdf" download>⬇ Das D-PACK-Modell als PDF herunterladen</a>
+    </div>
+  </section>
+
+  <a class="top" href="#top">↑ Nach oben</a>
+
+  <footer>
+    Arbeitshilfe · Das D-PACK-Modell · aus dem Workshop-Konzept „Projektorientiertes Lernen mit eduScrum“
+  </footer>
+
+</div>
+</body>
+</html>
